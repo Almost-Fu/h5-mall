@@ -60,6 +60,6 @@ async function onSubmit() {
 </template>
 
 <style scoped>
-.auth-page { padding-top: 46px; }
+.auth-page { padding-bottom: 30px; }
 .submit-btn { margin: 30px 16px; }
 </style>

@@ -31,7 +31,7 @@ function goProducts(id: number) {
         />
       </van-sidebar>
       <div class="content" @click="goProducts(categories[active]?.id || 1)">
-        <img :src="categories[active]?.icon || ''" class="big-icon" />
+        <div class="big-icon">{{ categories[active]?.icon || '🛍️' }}</div>
         <p class="tip">{{ categories[active]?.name || '' }}，点击查看全部商品 →</p>
       </div>
     </div>
@@ -39,10 +39,9 @@ function goProducts(id: number) {
 </template>
 
 <style scoped>
-.category-page { padding-top: 46px; }
 .category-body { display: flex; height: calc(100vh - 96px); }
 .sidebar { width: 90px; }
 .content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fff; }
-.big-icon { width: 80px; height: 80px; border-radius: 8px; }
+.big-icon { width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 48px; }
 .tip { margin-top: 16px; color: #999; font-size: 13px; }
 </style>

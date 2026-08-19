@@ -95,7 +95,7 @@ function goCheckout() {
 </template>
 
 <style scoped>
-.cart-page { padding-top: 46px; }
+.cart-page { min-height: 100vh; padding-bottom: 60px; }
 .cart-item { display: flex; align-items: center; padding: 12px; background: #fff; margin-bottom: 1px; }
 .item-img { width: 80px; height: 80px; border-radius: 6px; margin: 0 10px; object-fit: cover; }
 .item-info { flex: 1; }

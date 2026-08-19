@@ -92,7 +92,7 @@ onMounted(loadOrders)
 </template>
 
 <style scoped>
-.order-list-page { padding-top: 46px; background: #f7f8fa; min-height: 100vh; }
+.order-list-page { background: #f7f8fa; min-height: 100vh; }
 .order-card { background: #fff; margin: 10px; border-radius: 8px; overflow: hidden; }
 .order-head { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #f5f5f5; }
 .order-no { font-size: 12px; color: #999; }

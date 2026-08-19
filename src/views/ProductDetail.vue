@@ -103,7 +103,7 @@ async function confirmAdd() {
 </template>
 
 <style scoped>
-.detail-page { padding-top: 46px; }
+.detail-page { padding-bottom: 60px; }
 .swipe-img { width: 100%; height: 300px; object-fit: cover; }
 .info { background: #fff; padding: 14px; }
 .price-row { display: flex; align-items: baseline; }

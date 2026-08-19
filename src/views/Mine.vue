@@ -18,7 +18,7 @@ async function onLogout() {
   <div class="mine-page">
     <!-- 用户信息 -->
     <div class="user-card" @click="userStore.token ? null : router.push('/login')">
-      <van-image round width="60" height="60" :src="userStore.user?.avatar || 'https://picsum.photos/seed/avatar/60/60'" />
+      <div class="avatar">{{ userStore.user?.nickname?.[0] || userStore.user?.username?.[0] || '👤' }}</div>
       <div class="user-info">
         <template v-if="userStore.token && userStore.user">
           <div class="nickname">{{ userStore.user.nickname || userStore.user.username }}</div>
@@ -50,7 +50,8 @@ async function onLogout() {
 
 <style scoped>
 .mine-page { min-height: 100vh; background: #f7f8fa; padding-top: 10px; }
-.user-card { display: flex; align-items: center; padding: 24px 16px; background: linear-gradient(135deg, #1989fa, #07c160); margin: 10px; border-radius: 12px; }
+.user-card { display: flex; align-items: center; padding: 24px 16px; background: linear-gradient(135deg, #ee0a24, #ff6034); margin: 10px; border-radius: 12px; }
+.avatar { width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 255, 255, 0.28); display: flex; align-items: center; justify-content: center; font-size: 26px; color: #fff; font-weight: bold; }
 .user-info { margin-left: 14px; }
 .nickname { font-size: 18px; color: #fff; font-weight: bold; }
 .username { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 4px; }

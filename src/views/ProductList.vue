@@ -130,7 +130,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.list-page { padding-top: 46px; }
+.list-page { min-height: 100vh; }
 .filter-row { display: flex; align-items: center; background: #fff; border-bottom: 1px solid #f0f0f0; }
 .sort-tabs { display: flex; flex: 1; justify-content: space-around; padding: 10px 0; }
 .sort-item { font-size: 13px; color: #666; }

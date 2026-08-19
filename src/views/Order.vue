@@ -76,7 +76,7 @@ async function onSubmit() {
 </template>
 
 <style scoped>
-.order-page { padding-top: 46px; }
+.order-page { padding-bottom: 60px; }
 .address-card { background: #fff; padding: 14px; margin: 10px; border-radius: 8px; }
 .addr-name { display: flex; align-items: center; gap: 8px; }
 .name { font-size: 16px; font-weight: bold; }

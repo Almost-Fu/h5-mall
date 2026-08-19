@@ -71,7 +71,7 @@ async function onSave() {
 </template>
 
 <style scoped>
-.addr-edit-page { padding-top: 46px; }
+.addr-edit-page { min-height: 100vh; }
 .default-group { margin-top: 10px; }
 .save-btn { margin: 30px 16px; }
 </style>

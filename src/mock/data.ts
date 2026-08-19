@@ -2,14 +2,14 @@ import type { Category, Product } from '@/types'
 
 // 分类
 export const mockCategories: Category[] = [
-  { id: 1, name: '手机数码', icon: 'https://picsum.photos/seed/cat1/80/80', sort: 1 },
-  { id: 2, name: '服装鞋包', icon: 'https://picsum.photos/seed/cat2/80/80', sort: 2 },
-  { id: 3, name: '食品饮料', icon: 'https://picsum.photos/seed/cat3/80/80', sort: 3 },
-  { id: 4, name: '家居生活', icon: 'https://picsum.photos/seed/cat4/80/80', sort: 4 },
-  { id: 5, name: '美妆护肤', icon: 'https://picsum.photos/seed/cat5/80/80', sort: 5 },
-  { id: 6, name: '运动户外', icon: 'https://picsum.photos/seed/cat6/80/80', sort: 6 },
-  { id: 7, name: '图书文具', icon: 'https://picsum.photos/seed/cat7/80/80', sort: 7 },
-  { id: 8, name: '电脑办公', icon: 'https://picsum.photos/seed/cat8/80/80', sort: 8 }
+  { id: 1, name: '手机数码', icon: '📱', sort: 1 },
+  { id: 2, name: '服装鞋包', icon: '👟', sort: 2 },
+  { id: 3, name: '食品饮料', icon: '🍔', sort: 3 },
+  { id: 4, name: '家居生活', icon: '🏠', sort: 4 },
+  { id: 5, name: '美妆护肤', icon: '💄', sort: 5 },
+  { id: 6, name: '运动户外', icon: '⚽', sort: 6 },
+  { id: 7, name: '图书文具', icon: '📚', sort: 7 },
+  { id: 8, name: '电脑办公', icon: '💻', sort: 8 }
 ]
 
 // 商品（含描述和库存，用于详情）
@@ -18,7 +18,46 @@ export interface MockProduct extends Product {
   stock: number
 }
 
-const img = (id: number) => `https://picsum.photos/seed/p${id}/400/400`
+// 商品 emoji 图标（按商品 id 映射）
+const EMOJI: Record<number, string> = {
+  1: '📱', 2: '📱', 3: '📱', 4: '🎧', 5: '⌚',
+  6: '👟', 7: '👟', 8: '👕', 9: '👖', 10: '🎒',
+  11: '🥜', 12: '🍵', 13: '🍗', 14: '💧', 15: '🍪',
+  16: '🤖', 17: '💡', 18: '☕', 19: '🛋️', 20: '📦',
+  21: '🧴', 22: '🌹', 23: '✨', 24: '💄', 25: '🧴',
+  26: '🧘', 27: '🥽', 28: '🏋️', 29: '🚲', 30: '👕',
+  31: '📕', 32: '📗', 33: '🖋️', 34: '📓', 35: '🖍️',
+  36: '💻', 37: '⌨️', 38: '🖱️', 39: '🖥️', 40: '🖨️'
+}
+
+// 渐变色盘（商品图背景，循环使用）
+const PALETTE: [string, string][] = [
+  ['#667eea', '#764ba2'],
+  ['#f6d365', '#fda085'],
+  ['#f83600', '#f9d423'],
+  ['#43e97b', '#38f9d7'],
+  ['#fbc2eb', '#a6c1ee'],
+  ['#30cfd0', '#330867'],
+  ['#ff9a9e', '#fecfef'],
+  ['#0ba360', '#3cba92']
+]
+
+// 生成带 emoji + 渐变的本地 SVG 占位图（不依赖外网，秒加载）
+function svg(emoji: string, c1: string, c2: string, w = 400, h = 400): string {
+  const s = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="${w}" height="${h}" fill="url(#g)"/><text x="50%" y="53%" font-size="${Math.round(h * 0.45)}" text-anchor="middle" dominant-baseline="middle">${emoji}</text></svg>`
+  return `data:image/svg+xml,${encodeURIComponent(s)}`
+}
+
+const img = (id: number) => {
+  const [c1, c2] = PALETTE[(id - 1) % PALETTE.length]
+  return svg(EMOJI[id] || '🛍️', c1, c2)
+}
+
+// 首页轮播 banner 图
+export function makeBanner(title: string, sub: string, c1: string, c2: string): string {
+  const s = `<svg xmlns="http://www.w3.org/2000/svg" width="750" height="300" viewBox="0 0 750 300"><defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="750" height="300" fill="url(#b)"/><circle cx="620" cy="150" r="110" fill="rgba(255,255,255,0.15)"/><text x="64" y="138" font-size="44" fill="#fff" font-weight="bold" font-family="sans-serif">${title}</text><text x="64" y="194" font-size="24" fill="rgba(255,255,255,0.88)" font-family="sans-serif">${sub}</text></svg>`
+  return `data:image/svg+xml,${encodeURIComponent(s)}`
+}
 
 export const mockProducts: MockProduct[] = [
   { id: 1, category_id: 1, name: 'iPhone 15 Pro Max 256G', description: '苹果旗舰A17Pro芯片钛金属边框', cover_image: img(1), price: 9999, original_price: 11999, stock: 50, sales: 328, is_hot: 1 },
@@ -66,10 +105,14 @@ export const mockProducts: MockProduct[] = [
 
 // 商品详情图片（每个商品3张）
 export function getProductImages(id: number) {
+  const emoji = EMOJI[id] || '🛍️'
+  const p1 = PALETTE[(id - 1) % PALETTE.length]
+  const p2 = PALETTE[id % PALETTE.length]
+  const p3 = PALETTE[(id + 1) % PALETTE.length]
   return [
-    { id: id * 3 + 1, image_url: `https://picsum.photos/seed/p${id}a/400/400`, sort: 1 },
-    { id: id * 3 + 2, image_url: `https://picsum.photos/seed/p${id}b/400/400`, sort: 2 },
-    { id: id * 3 + 3, image_url: `https://picsum.photos/seed/p${id}c/400/400`, sort: 3 }
+    { id: id * 3 + 1, image_url: svg(emoji, p1[0], p1[1]), sort: 1 },
+    { id: id * 3 + 2, image_url: svg(emoji, p2[0], p2[1]), sort: 2 },
+    { id: id * 3 + 3, image_url: svg(emoji, p3[0], p3[1]), sort: 3 }
   ]
 }
 

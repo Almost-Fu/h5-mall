@@ -2,15 +2,16 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getCategories, getProducts } from '@/api/product'
+import { makeBanner } from '@/mock/data'
 import type { Category, Product } from '@/types'
 
 const router = useRouter()
 const categories = ref<Category[]>([])
 const hotProducts = ref<Product[]>([])
 const banners = [
-  { image: 'https://picsum.photos/seed/banner1/750/300', link: '' },
-  { image: 'https://picsum.photos/seed/banner2/750/300', link: '' },
-  { image: 'https://picsum.photos/seed/banner3/750/300', link: '' }
+  makeBanner('新品首发', 'iPhone 15 Pro Max 钛金属', '#667eea', '#764ba2'),
+  makeBanner('限时特惠', '全场爆款低至 5 折起', '#f83600', '#f9d423'),
+  makeBanner('品质家居', '提升你的生活质感', '#43e97b', '#38f9d7')
 ]
 
 onMounted(async () => {
@@ -43,19 +44,16 @@ function goDetail(id: number) {
     <!-- 轮播图 -->
     <van-swipe class="banner" :autoplay="3000" lazy-render>
       <van-swipe-item v-for="(b, i) in banners" :key="i">
-        <img :src="b.image" class="banner-img" />
+        <img :src="b" class="banner-img" />
       </van-swipe-item>
     </van-swipe>
 
     <!-- 分类宫格 -->
     <van-grid :column-num="4" :border="false" class="grid">
-      <van-grid-item
-        v-for="c in categories"
-        :key="c.id"
-        :icon="c.icon"
-        :text="c.name"
-        @click="goCategory(c.id)"
-      />
+      <van-grid-item v-for="c in categories" :key="c.id" @click="goCategory(c.id)">
+        <span class="cat-icon">{{ c.icon }}</span>
+        <span class="cat-name">{{ c.name }}</span>
+      </van-grid-item>
     </van-grid>
 
     <!-- 热销商品 -->
@@ -77,9 +75,11 @@ function goDetail(id: number) {
 </template>
 
 <style scoped>
-.banner { margin: 0 10px; border-radius: 8px; overflow: hidden; }
-.banner-img { width: 100%; height: 140px; display: block; }
-.grid { margin-top: 10px; }
+.banner { margin: 0 10px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+.banner-img { width: 100%; height: 150px; display: block; object-fit: cover; }
+.grid { margin: 10px 0 0; background: #fff; padding: 8px 0; }
+.cat-icon { font-size: 26px; line-height: 1; }
+.cat-name { font-size: 12px; color: #323233; margin-top: 6px; }
 .section-title { display: flex; align-items: center; justify-content: center; margin: 20px 0 10px; font-size: 16px; font-weight: bold; color: #333; }
 .line { width: 24px; height: 2px; background: #ee0a24; margin: 0 8px; }
 .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 10px; }

@@ -55,5 +55,5 @@ onMounted(load)
 </template>
 
 <style scoped>
-.address-page { padding-top: 46px; }
+.address-page { min-height: 100vh; }
 </style>
